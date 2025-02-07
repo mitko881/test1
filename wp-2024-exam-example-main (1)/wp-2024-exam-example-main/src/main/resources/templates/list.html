@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>WP Exam</title>
+</head>
+<body>
+
+<div>
+    <!-- The form below should invoke the method ReservationsController.listAll -->
+    <form id="filter-form">
+        <label for="guestName">Guest Name</label>
+        <input id="guestName" type="text" name=""/>
+        <label for="roomType">Genre</label>
+        <select id="roomType" name="">
+            <option value="">All</option>
+            <!-- For each RoomType you should have one <option> like below  -->
+            <option>[roomName]</option>
+        </select>
+        <select id="hotel" name="">
+            <option value="">All</option>
+            <!-- For each Hotel you should have one <option> like below  -->
+            <option>[hotel.name]</option>
+        </select>
+        <button id="filter" type="submit">Filter</button>
+    </form>
+    <div>
+        <!-- ReservationsController.showAdd -->
+        <a href="/reservations/add" class="add-item">
+            Add new reservation
+        </a>
+    </div>
+    <table>
+        <tr>
+            <th>Guest Name</th>
+            <th>Date of Creation</th>
+            <th>Room Type</th>
+            <th>Hotel</th>
+            <th>Days of Stay</th>
+            <th>Actions</th>
+        </tr>
+        <!-- For each reservation you should have one <tr> like below -->
+        <tr class="item" th:each="reservation:${reservations}">
+            <td th:text="${reservation.guestName}">[reservation.guestName]</td>
+            <td th:text="${reservation.dateCreated}">[reservation.dateCreated]</td>
+            <td th:text="${reservation.roomType}">[reservation.roomType]</td>
+            <td th:text="${reservation.hotel.name}">[reservation.hotel.name]</td>
+            <td th:text="${reservation.daysOfStay}">[reservation.daysOfStay]</td>
+            <td>
+                <!-- ReservationsController.delete -->
+                <form method="post" th:action="'/reservations/delete/'+ ${reservation.id}">
+                    <button type="submit" class="delete-item">Delete</button>
+                </form>
+                <!-- ReservationsController.showEdit -->
+                <a class="edit-item" th:href="'/reservations/edit/'+${reservation.id}">Edit</a>
+                <!-- ReservationsController.extend -->
+                <form method="post" th:action="'/reservations/extend/'+ ${reservation.id}">
+                    <button type="submit" class="extend-item">Extend stay</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+
+</div>
+<div>
+    <ul id="nav">
+        <li><a href="/">Home</a></li>
+        <li><a href="/login">Login</a></li>
+        <li><a href="/logout">Logout</a></li>
+    </ul>
+</div>
+</body>
+</html>
